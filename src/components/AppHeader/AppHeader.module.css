@@ -1,0 +1,7 @@
+.hdr {
+  border-bottom: 2px solid grey;
+}
+.hdrNavList {
+  display: flex;
+  gap: 12px;
+}
