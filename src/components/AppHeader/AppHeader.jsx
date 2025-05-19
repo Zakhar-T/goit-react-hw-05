@@ -9,7 +9,7 @@ export default function AppHeader() {
           <NavLink to="/">Home</NavLink>
         </li>
         <li className={styles.hdrNavItem}>
-          <NavLink to="/search">Search movies</NavLink>
+          <NavLink to="/movies">Search movies</NavLink>
         </li>
       </ul>
     </header>

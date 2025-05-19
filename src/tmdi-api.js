@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const url = 'https://api.themoviedb.org/3/list/list_id?language=en-US&page=1';
+const trendingUrl =
+  'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
+const detailsUrl = 'https://api.themoviedb.org/3/movie/';
 const options = {
   headers: {
     Authorization:
@@ -8,9 +10,12 @@ const options = {
   },
 };
 
-function fetchTrendingMovies() {
-  axios
-    .get(url, options)
-    .then((response) => console.log(response))
-    .catch((err) => console.error(err));
+export async function fetchTrendingMovies() {
+  const resp = await axios.get(trendingUrl, options);
+  return resp.data.results;
+}
+
+export async function fetchMovieDetails(movieId) {
+  const resp = await axios.get(detailsUrl + movieId, options);
+  return resp.data;
 }
