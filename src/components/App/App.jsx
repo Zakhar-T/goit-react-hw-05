@@ -3,15 +3,19 @@ import AppHeader from '../AppHeader/AppHeader';
 import HomePage from '../../pages/HomePage/HomePage';
 import MoviesPage from '../../pages/MoviesPage/MoviesPage';
 import MovieDetailsPage from '../../pages/MovieDetailsPage/MovieDetailsPage';
+import MovieCast from '../MovieCast/MovieCast';
 
 export default function App() {
   return (
     <>
       <AppHeader />
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
-        <Route path="/movies" element={<MoviesPage />}></Route>
-        <Route path="/movies/:movieId" element={<MovieDetailsPage />}></Route>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+          <Route path="cast" element={<MovieCast />} />
+          <Route path="reviews" />
+        </Route>
       </Routes>
     </>
   );
