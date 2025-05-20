@@ -6,19 +6,26 @@ import { useEffect, useState } from 'react';
 
 export default function HomePage() {
   const [trendingMovies, setTrendingMovies] = useState([]);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
+        setLoading(true);
         const movies = await fetchTrendingMovies();
-        return setTrendingMovies(movies);
+        setTrendingMovies(movies);
       } catch {
-        return <ErrorMessage />;
+        setError(true);
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
   }, []);
 
+  if (loading) return <p>Loading data, please wait...</p>;
+  if (error) return <ErrorMessage />;
   return (
     <main>
       <h1>Trending today</h1>

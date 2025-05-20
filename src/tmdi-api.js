@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+const moviesUrl = 'https://api.themoviedb.org/3/search/movie';
 const trendingUrl =
   'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
 const detailsUrl = 'https://api.themoviedb.org/3/movie/';
@@ -35,6 +36,14 @@ export async function fetchMovieCast(movieId) {
 export async function fetchMovieReviews(movieId) {
   const resp = await axios.get(
     `${detailsUrl + movieId}/reviews?language=en-US`,
+    options,
+  );
+  return resp.data.results;
+}
+
+export async function fetchMovies(query) {
+  const resp = await axios.get(
+    `${moviesUrl}?query=${query}&include_adult=false&language=en-US&page=1`,
     options,
   );
   return resp.data.results;

@@ -8,19 +8,24 @@ export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
+        setLoading(true);
         const movie = await fetchMovieDetails(movieId);
         setMovie(movie);
       } catch {
         setError(true);
+      } finally {
+        setLoading(false);
       }
     }
     fetchData();
   }, [movieId]);
 
+  if (loading) return <p>Loading data, please wait...</p>;
   if (error) return <ErrorMessage />;
   if (movie)
     return (
