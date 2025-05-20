@@ -21,8 +21,6 @@ export default function MovieCast() {
     fetchData();
   }, [movieId]);
 
-  console.log(movieCast);
-
   if (error) return <ErrorMessage />;
   if (movieCast)
     return (

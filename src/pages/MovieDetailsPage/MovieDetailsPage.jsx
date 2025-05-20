@@ -43,9 +43,9 @@ export default function MovieDetailsPage() {
             <p>{movie.overview}</p>
             <h2>Genres</h2>
             <ul>
-              {movie.genres.map((genre) => {
-                return <li key={genre.id}>{genre.name}</li>;
-              })}
+              {movie.genres.map((genre) => (
+                <li key={genre.id}>{genre.name}</li>
+              ))}
             </ul>
           </div>
         </div>
