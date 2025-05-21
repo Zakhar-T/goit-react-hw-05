@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchMovies } from '../../tmdi-api';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import MovieList from '../../components/MovieList/MovieList';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState(null);
@@ -10,7 +10,6 @@ export default function MoviesPage() {
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
-  const location = useLocation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -52,9 +51,7 @@ export default function MoviesPage() {
       {movies && movies.length === 0 && (
         <p>There are no movies matching your query</p>
       )}
-      {movies && movies.length > 0 && !loading && (
-        <MovieList movies={movies} location={location} />
-      )}
+      {movies && movies.length > 0 && !loading && <MovieList movies={movies} />}
     </>
   );
 }

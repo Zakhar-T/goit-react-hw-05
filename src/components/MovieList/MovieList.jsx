@@ -1,7 +1,10 @@
 import styles from './MovieList.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-export default function MovieList({ movies, location }) {
+export default function MovieList({ movies }) {
+  const location = useLocation();
+  console.log(location);
+
   return (
     <ul className={styles.movieList}>
       {movies.map((movie) => {

@@ -1,7 +1,7 @@
 import styles from './MovieDetailsPage.module.css';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import { useEffect, useState, useLocation, useRef } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
 import { fetchMovieDetails } from '../../tmdi-api';
 
 export default function MovieDetailsPage() {
