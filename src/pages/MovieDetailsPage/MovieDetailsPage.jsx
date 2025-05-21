@@ -1,6 +1,6 @@
 import styles from './MovieDetailsPage.module.css';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLocation, useRef } from 'react';
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { fetchMovieDetails } from '../../tmdi-api';
 
@@ -9,6 +9,8 @@ export default function MovieDetailsPage() {
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+  const backLink = useRef(location.state);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,7 +32,7 @@ export default function MovieDetailsPage() {
   if (movie)
     return (
       <main>
-        <Link to="/" className={styles.backLink}>
+        <Link to={backLink.current} className={styles.backLink}>
           Go back
         </Link>
         <div className={styles.movieDetailsContainer}>

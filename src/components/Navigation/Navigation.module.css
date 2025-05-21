@@ -1,0 +1,16 @@
+.hdr {
+  border-bottom: 2px solid grey;
+}
+.hdrNavList {
+  display: flex;
+  gap: 24px;
+  padding: 16px;
+}
+.hdrNavLink {
+  text-decoration: none;
+  font-size: large;
+  font-weight: 500;
+}
+.linkIsActive {
+  color: darkorange;
+}

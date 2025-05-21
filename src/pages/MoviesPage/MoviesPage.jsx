@@ -1,32 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchMovies } from '../../tmdi-api';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import { Link } from 'react-router-dom';
+import MovieList from '../../components/MovieList/MovieList';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 export default function MoviesPage() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') ?? '';
+  const location = useLocation();
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetchData(e.target.elements.movieSearch.value);
+    const newQuery = e.target.elements.movieSearch.value;
+    const newSeasrchParams = new URLSearchParams(searchParams);
+    if (newQuery !== '') {
+      newSeasrchParams.set('query', newQuery);
+    } else {
+      newSeasrchParams.delete('query');
+    }
+    setSearchParams(newSeasrchParams);
     e.target.reset();
   }
 
-  async function fetchData(searchQuery) {
-    try {
-      setLoading(true);
-      const movies = await fetchMovies(searchQuery);
-      setMovies(movies);
-    } catch {
-      setError(true);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        const movies = await fetchMovies(query);
+        setMovies(movies);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
     }
-  }
+    fetchData();
+  }, [query]);
 
-  if (loading) return <p>Loading data, please wait...</p>;
   if (error) return <ErrorMessage />;
   return (
     <>
@@ -35,17 +48,12 @@ export default function MoviesPage() {
         <input type="text" name="movieSearch" />
         <button type="submit">Search</button>
       </form>
-      {movies && <p>There are no movies matching your query</p>}
-      {movies.length > 0 && (
-        <ul>
-          {movies.map((movie) => {
-            return (
-              <li key={movie.id}>
-                <Link to={`${movie.id}`}>{movie.title}</Link>
-              </li>
-            );
-          })}
-        </ul>
+      {loading && <p>Loading data, please wait...</p>}
+      {movies && movies.length === 0 && (
+        <p>There are no movies matching your query</p>
+      )}
+      {movies && movies.length > 0 && !loading && (
+        <MovieList movies={movies} location={location} />
       )}
     </>
   );
